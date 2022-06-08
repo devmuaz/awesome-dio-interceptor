@@ -11,3 +11,7 @@
 - Added support for FormData (fields and files) logging in the request.
 - Added capability to display the type of the request body you're sending (Json, or FormData)
 - Other minor bug fixes
+
+## 0.0.2+1
+
+- Removed unwanted code from the example
