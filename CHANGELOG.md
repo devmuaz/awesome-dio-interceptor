@@ -1,10 +1,10 @@
-## 0.0.1
+## 0.0.2+2
 
-- initial release
+- Fix CHANGELOG.md file
 
-## 0.0.1+1
+## 0.0.2+1
 
-- Removed the (windows, linux, mac, and web) directories from the example
+- Remove unwanted code from the example
 
 ## 0.0.2
 
@@ -12,6 +12,10 @@
 - Added capability to display the type of the request body you're sending (Json, or FormData)
 - Other minor bug fixes
 
-## 0.0.2+1
+## 0.0.1+1
 
-- Removed unwanted code from the example
+- Removed the (windows, linux, mac, and web) directories from the example
+
+## 0.0.1
+
+- initial release
