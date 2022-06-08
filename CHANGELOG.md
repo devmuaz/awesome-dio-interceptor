@@ -1,3 +1,7 @@
+## 0.0.2+3
+
+- Updated README.md file
+
 ## 0.0.2+2
 
 - Fixed CHANGELOG.md file

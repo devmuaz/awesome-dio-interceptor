@@ -2,6 +2,12 @@
 
 A simple dio log interceptor (mainly inspired by the built-in dio **`LogInterceptor`**), which has coloring features and json formatting so you can have a better readable output.
 
+## Features
+
+- Customizable, minimizable, and colorful output 🔥
+- Json formatting 💪
+- Pretty FormData support (fields & files) output ⚡️
+
 ## Output Samples
 
 The last two images have been minimized, so we can have better look at the most important logs (can be enabled and disabled, enabled by default)
