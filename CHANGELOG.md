@@ -1,10 +1,10 @@
 ## 0.0.2+2
 
-- Fix CHANGELOG.md file
+- Fixed CHANGELOG.md file
 
 ## 0.0.2+1
 
-- Remove unwanted code from the example
+- Removed unwanted code from the example
 
 ## 0.0.2
 
