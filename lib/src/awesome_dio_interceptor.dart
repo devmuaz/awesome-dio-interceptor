@@ -80,9 +80,40 @@ class AwesomeDioInterceptor implements Interceptor {
     _logger('$coloredMessage');
   }
 
-  void _logJson({required String key, dynamic value, Styles? style}) {
-    final encodedJson = _jsonEncoder.convert(value);
-    _log(key: key, value: encodedJson, style: style);
+  void _logJson({
+    required String key,
+    dynamic value,
+    Styles? style,
+    bool isResponse = false,
+  }) {
+    final isFormData = value.runtimeType == FormData;
+    final isValueNull = value == null;
+
+    final encodedJson = _jsonEncoder.convert(
+      isFormData ? Map.fromEntries((value as FormData).fields) : value,
+    );
+    _log(
+      key: isResponse
+          ? key
+          : '${isFormData ? '[formData.fields]' : !isValueNull ? '[Json]' : ''} $key',
+      value: encodedJson,
+      style: style,
+    );
+
+    if (isFormData && !isResponse) {
+      final files = (value as FormData)
+          .files
+          .map((e) => e.value.filename ?? 'Null or Empty filename')
+          .toList();
+      if (files.isNotEmpty) {
+        final encodedJson = _jsonEncoder.convert(files);
+        _log(
+          key: '[formData.files] Request Body:\n',
+          value: encodedJson,
+          style: style,
+        );
+      }
+    }
   }
 
   void _logHeaders({required Map headers, Styles? style}) {
@@ -157,12 +188,21 @@ class AwesomeDioInterceptor implements Interceptor {
     if (_logResponseHeaders) {
       _logHeaders(headers: response.headers.map, style: style);
     }
-    _logJson(key: 'Response Body:\n', value: response.data, style: style);
+    _logJson(
+      key: 'Response Body:\n',
+      value: response.data,
+      style: style,
+      isResponse: true,
+    );
   }
 
   void _logError(DioError err, {Styles? style}) {
-    _log(key: '[DioError] ->', value: '', style: style);
-    _log(key: 'DioError [${err.type}]: ', value: err.message, style: style);
+    _log(key: '[Error] ->', value: '', style: style);
+    _log(
+      key: 'DioError: ',
+      value: '[${err.type.toString()}]: ${err.message}',
+      style: style,
+    );
   }
 
   void _delay() async => await Future.delayed(
@@ -172,7 +212,9 @@ class AwesomeDioInterceptor implements Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     _logError(err, style: _errorStyle);
-    _logResponse(err.response!, error: true, style: _errorStyle);
+    if (err.response != null) {
+      _logResponse(err.response!, error: true, style: _errorStyle);
+    }
     _logNewLine();
 
     _delay();

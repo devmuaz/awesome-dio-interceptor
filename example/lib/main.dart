@@ -50,9 +50,23 @@ class MyHomePage extends StatelessWidget {
               AwesomeDioInterceptor(),
             );
 
-            await dio.get(
+            // await dio.get(
+            //   'https://jsonplaceholder.typicode.com/posts/1',
+            // );
+
+            await dio.post(
               'https://jsonplaceholder.typicode.com/posts/1',
+              data: FormData.fromMap({
+                'usernane': 'devmuaz',
+                '1': MultipartFile.fromBytes([], filename: 'file_targt'),
+                '2': MultipartFile.fromBytes([]),
+              }),
             );
+
+            // await dio.post(
+            //   'https://jsonplaceholder.typicode.com/posts/1',
+            //   data: {'usernane': 'devmuaz'},
+            // );
           },
           child: const Text('Send Request'),
         ),
