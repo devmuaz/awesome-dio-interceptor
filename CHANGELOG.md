@@ -1,3 +1,7 @@
+## 0.0.2+4
+
+- Updated README.md file (added the installation part)
+
 ## 0.0.2+3
 
 - Updated README.md file

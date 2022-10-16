@@ -29,6 +29,13 @@ The last two images have been minimized, so we can have better look at the most 
 	/>
 </div>
 
+## Install
+
+```yaml
+dependencies:
+	awesome_dio_interceptor: 0.0.2+4
+```
+
 ## Usage
 
 Just add the **AwesomeDioInterceptor** to your dio interceptors like so:
