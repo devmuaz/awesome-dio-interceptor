@@ -1,3 +1,7 @@
+## 1.0.0
+
+- Updated dependencies, now it supports `Dio v5.x.x`
+
 ## 0.0.2+4
 
 - Updated README.md file (added the installation part)

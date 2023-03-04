@@ -1,6 +1,6 @@
 name: awesome_dio_interceptor
 description: A simple dio log interceptor (mainly inspired by the built-in dio LogInterceptor), which has coloring features and json formatting so you can have a better readable output.
-version: 0.0.2+4
+version: 1.0.0
 homepage: https://github.com/devmuaz/awesome_dio_interceptor
 
 environment:
@@ -11,13 +11,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-  dio: ^4.0.6
+  dio: ^5.0.1
   colorize: ^3.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

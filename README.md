@@ -33,7 +33,7 @@ The last two images have been minimized, so we can have better look at the most 
 
 ```yaml
 dependencies:
-	awesome_dio_interceptor: 0.0.2+4
+	awesome_dio_interceptor: <latest_version>
 ```
 
 ## Usage
