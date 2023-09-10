@@ -16,17 +16,17 @@ class AwesomeDioInterceptor implements Interceptor {
   ///
   /// `errorStyle`: The error response color style, defaults to `RED`
   ///
-  /// `logRequestHeaders`: Whether to log the request headrers or not,
+  /// `logRequestHeaders`: Whether to log the request headers or not,
   /// it should minimize the logging output.
   ///
-  /// `logResponseHeaders`: Whether to log the response headrers or not,
+  /// `logResponseHeaders`: Whether to log the response headers or not,
   /// it should minimize the logging output.
   ///
   /// `logRequestTimeout`: Whether to log the request timeout info or not,
   /// it should minimize the logging output.
   ///
   /// `logger`: if you want to override the default logger which is `log`,
-  /// you can set any printer or logger you prefer.. just pass a refrence
+  /// you can set any printer or logger you prefer.. just pass a reference
   /// of your function to this function parameter and you're good to go.
   ///
   /// **Example**
@@ -196,7 +196,7 @@ class AwesomeDioInterceptor implements Interceptor {
     );
   }
 
-  void _logError(DioError err, {Styles? style}) {
+  void _logError(DioException err, {Styles? style}) {
     _log(key: '[Error] ->', value: '', style: style);
     _log(
       key: 'DioError: ',
@@ -210,7 +210,7 @@ class AwesomeDioInterceptor implements Interceptor {
       );
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     _logError(err, style: _errorStyle);
     if (err.response != null) {
       _logResponse(err.response!, error: true, style: _errorStyle);
