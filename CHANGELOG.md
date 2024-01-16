@@ -1,3 +1,9 @@
+## 1.1.0
+
+- Replaced `DioError` with `DioException`
+- Update `Dio` dependency to `v5.4.0`
+- Update Dart SDK to `v3.0.1`
+
 ## 1.0.0
 
 - Updated dependencies, now it supports `Dio v5.x.x`

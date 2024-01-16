@@ -196,10 +196,10 @@ class AwesomeDioInterceptor implements Interceptor {
     );
   }
 
-  void _logError(DioError err, {Styles? style}) {
+  void _logError(DioException err, {Styles? style}) {
     _log(key: '[Error] ->', value: '', style: style);
     _log(
-      key: 'DioError: ',
+      key: 'DioException: ',
       value: '[${err.type.toString()}]: ${err.message}',
       style: style,
     );
@@ -210,7 +210,7 @@ class AwesomeDioInterceptor implements Interceptor {
       );
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     _logError(err, style: _errorStyle);
     if (err.response != null) {
       _logResponse(err.response!, error: true, style: _errorStyle);
