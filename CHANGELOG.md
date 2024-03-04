@@ -1,3 +1,8 @@
+## 1.2.0
+
+- Add support for dart-only projects by removing the `flutter` dependency
+- Replaced `flutter_lint` with `lints`
+
 ## 1.1.0
 
 - Replaced `DioError` with `DioException`
