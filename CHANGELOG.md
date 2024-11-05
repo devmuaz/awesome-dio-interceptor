@@ -1,3 +1,9 @@
+## 1.3.0
+
+- Fixed an issue where an exception gets thrown while attempting to download a file
+  The `response body` supports `Json`, `File`, or `null`
+  The `request body` supports `Json`, `FromData (fields & files)`, or `null`
+
 ## 1.2.0
 
 - Add support for dart-only projects by removing the `flutter` dependency

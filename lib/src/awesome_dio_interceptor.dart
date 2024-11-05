@@ -5,6 +5,12 @@ import 'dart:developer';
 import 'package:colorize/colorize.dart';
 import 'package:dio/dio.dart';
 
+enum _BodyType {
+  formData,
+  file,
+  json,
+}
+
 /// A simple dio log interceptor (mainly inspired by the built-in dio
 /// `LogInterceptor`), which has coloring features and json formatting
 /// so you can have a better readable output.
@@ -86,21 +92,36 @@ class AwesomeDioInterceptor implements Interceptor {
     Styles? style,
     bool isResponse = false,
   }) {
-    final isFormData = value.runtimeType == FormData;
+    String encodedJson = '';
+    final type = _bodyType(value);
     final isValueNull = value == null;
 
-    final encodedJson = _jsonEncoder.convert(
-      isFormData ? Map.fromEntries((value as FormData).fields) : value,
-    );
+    switch (type) {
+      case _BodyType.formData:
+        encodedJson = _jsonEncoder.convert(
+          Map.fromEntries((value as FormData).fields),
+        );
+        break;
+      case _BodyType.file:
+        encodedJson = 'File: ${value.runtimeType.toString()}';
+        break;
+      case _BodyType.json:
+        encodedJson = _jsonEncoder.convert(isValueNull ? 'null' : value);
+        break;
+    }
+
     _log(
-      key: isResponse
-          ? key
-          : '${isFormData ? '[formData.fields]' : !isValueNull ? '[Json]' : ''} $key',
+      key: switch (type) {
+        _BodyType.formData when !isResponse => '[FormData.fields] $key',
+        _BodyType.file when !isResponse => '[File] $key',
+        _BodyType.json when !isValueNull && !isResponse => '[Json] $key',
+        _ => key,
+      },
       value: encodedJson,
       style: style,
     );
 
-    if (isFormData && !isResponse) {
+    if (type == _BodyType.formData && !isResponse) {
       final files = (value as FormData)
           .files
           .map((e) => e.value.filename ?? 'Null or Empty filename')
@@ -108,7 +129,7 @@ class AwesomeDioInterceptor implements Interceptor {
       if (files.isNotEmpty) {
         final encodedJson = _jsonEncoder.convert(files);
         _log(
-          key: '[formData.files] Request Body:\n',
+          key: '[FormData.files] Request Body:\n',
           value: encodedJson,
           style: style,
         );
@@ -122,7 +143,7 @@ class AwesomeDioInterceptor implements Interceptor {
       _log(
         key: '\t$key: ',
         value: (value is List && value.length == 1)
-            ? value.first
+            ? '[${(value).join(', ')}]'
             : value.toString(),
         style: style,
       );
@@ -132,9 +153,9 @@ class AwesomeDioInterceptor implements Interceptor {
   void _logNewLine() => _log(key: '', value: '');
 
   void _logRequest(RequestOptions options, {Styles? style}) {
-    _log(key: '[Request] ->', value: '', style: _requestStyle);
-    _log(key: 'Uri: ', value: options.uri.toString(), style: _requestStyle);
-    _log(key: 'Method: ', value: options.method, style: _requestStyle);
+    _log(key: '[Request] ->', value: '', style: style);
+    _log(key: 'Uri: ', value: options.uri.toString(), style: style);
+    _log(key: 'Method: ', value: options.method, style: style);
     _log(
       key: 'Response Type: ',
       value: options.responseType.toString(),
@@ -236,5 +257,15 @@ class AwesomeDioInterceptor implements Interceptor {
     _logNewLine();
 
     handler.next(response);
+  }
+
+  _BodyType _bodyType(dynamic value) {
+    if (value.runtimeType == FormData) {
+      return _BodyType.formData;
+    } else if (value.runtimeType == ResponseBody) {
+      return _BodyType.file;
+    } else {
+      return _BodyType.json;
+    }
   }
 }

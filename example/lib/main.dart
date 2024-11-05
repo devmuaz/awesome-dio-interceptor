@@ -47,7 +47,11 @@ class MyHomePage extends StatelessWidget {
             );
 
             dio.interceptors.add(
-              AwesomeDioInterceptor(),
+              AwesomeDioInterceptor(
+                logRequestHeaders: false,
+                logRequestTimeout: false,
+                logResponseHeaders: false,
+              ),
             );
 
             await dio.get(
